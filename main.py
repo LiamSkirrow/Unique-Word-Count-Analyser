@@ -1,6 +1,6 @@
 # read in a text file and analyse the word composition... get unique word count for txt files
 
-# TODO: sort the words by frequency in the dictionary and display...
+import anki
 
 fileName = 'harryPott.txt'
 stripChars = "‘,.-—?!»«0123456789()"
