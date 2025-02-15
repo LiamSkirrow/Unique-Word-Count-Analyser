@@ -1,14 +1,31 @@
 # read in a text file and analyse the word composition... get unique word count for txt files
 
-import anki
+from ankiaccess import request, invoke
+import argparse
 
-fileName = 'harryPott.txt'
+parser = argparse.ArgumentParser()
+parser.add_argument("-f", "--filename", type=str, required=True)
+parser.add_argument("-d", "--dump",       nargs="?", default=False, const=True, required=False)
+parser.add_argument("-p", "--printdecks", nargs="?", default=False, const=True, required=False
+                    , help="leave blank for list of available decks")
+parser.add_argument("-c", "--compare",  type=str, required=False
+                    , help="Name of Anki deck to be compared")
+
+args = parser.parse_args()
+filename     = args.filename
+dump         = args.dump
+compare      = args.compare
+printdecks   = args.printdecks
+
+# TODO: somehow check if filename was read correctly more elegantly than just failing the open()
+
+# chars to strip out of the words before processing
 stripChars = "‘,.-—?!»«0123456789()"
 
 if __name__ == "__main__":
     wordFreqPairDict = {}
-    print("Opening file: '" + fileName + "' for analysis...")
-    with open(fileName, 'r') as f:
+    print("Opening file: '" + filename + "' for analysis...")
+    with open(filename, 'r') as f:
         for line in f.readlines():
             for word in line.split():
                 ret = wordFreqPairDict.get(word.lower().strip(stripChars), 'EMPTY')
@@ -20,7 +37,22 @@ if __name__ == "__main__":
                     ret += 1
                     wordFreqPairDict.update({word.lower().strip(stripChars) : ret})
     
-    print(wordFreqPairDict.items())
+    # TODO: make this dump a bit prettier in the terminal, maybe one line per dict entry
+    if(dump):
+        print(wordFreqPairDict.items())
     print('\n')
     print("Total unique word count: " + str(len(wordFreqPairDict.items())))
     print("Total non-unique word count: " + str(sum(wordFreqPairDict.values())))
+
+    # check if we're printing out the available deck names
+    if(printdecks):
+        result = invoke('deckNames')
+        print(*result, sep='\n')
+    # check if we're comparing the supplied file with the Anki deck
+    if(compare):
+        print("\nFetching deck " + compare + "...")
+        # form the dictionary required containing the deck name
+        deckNameDict = { 'query' : 'deck:'+compare }
+        # perform a findCards operation using the given deck name
+        foundCardsIds = invoke('findCards', deckNameDict)
+        print(str(foundCardsIds))
