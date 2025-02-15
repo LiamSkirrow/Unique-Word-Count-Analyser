@@ -1,10 +1,6 @@
 # test script to play around with and get familiar with the Anki module
 
-
-#from anki.collection import Collection
-#col = Collection("/home/liam-skirrow/.local/share/Anki2/User 1/collection.anki2")
-#print(col.sched.deck_due_tree())
-#deck = col.decks.get(1739026072707)
+# ruthlessly copied from: https://codeberg.org/foosoft/anki-connect#card-actions
 
 import json
 import urllib.request
@@ -24,8 +20,4 @@ def invoke(action, **params):
     if response['error'] is not None:
         raise Exception(response['error'])
     return response['result']
-
-#invoke('createDeck', deck='test1')
-result = invoke('deckNames')
-print('got list of decks: {}'.format(result))
 
