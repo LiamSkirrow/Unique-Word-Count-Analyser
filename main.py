@@ -2,7 +2,7 @@
 
 # TODO: sort the words by frequency in the dictionary and display...
 
-fileName = 'HP&PhilStone-ES.txt'
+fileName = 'harryPott.txt'
 stripChars = "‘,.-—?!»«0123456789()"
 
 if __name__ == "__main__":
