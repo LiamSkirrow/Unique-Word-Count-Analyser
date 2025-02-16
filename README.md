@@ -18,3 +18,6 @@ A script that looks through a *.txt file and determines the total number of uniq
   - do 'cardsInfo' to get the actual card front/back vocabulary information. Add to internally stored dict (therefore storing front+back information)
   - can finally cross check between the Anki and supplied text vocab
   
+### Testing Notes
+- Write a sample text file by hand including known A1 vocab and check how well the text splitting works. I'll have to remove the der/die/das literals from the
+  Anki cards before storing in the internal list so this sample text can push the script to see how well it identifies words.
