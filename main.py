@@ -56,7 +56,7 @@ if __name__ == "__main__":
         # form the dictionary required containing the deck name
         deckNameDict = { 'query' : 'deck:'+compare }
         # perform a findCards operation using the given deck name
-        foundCardsIds = invoke('findCards', query='deck:current')
+        foundCardsIds = invoke('findCards', query='deck:A2_Wortliste_Goethe')
         print(foundCardsIds[0])
         cardsInfo = invoke('cardsInfo', cards=[foundCardsIds[0]])
         print(str(cardsInfo))
@@ -65,3 +65,5 @@ if __name__ == "__main__":
 # TODO:
 # - figure out how to pass the deck name through the command line rather than relying on 
 #   deck:current
+# - it works for deck names that don't include spaces apparently? Using A2_Wortliste_Goethe 
+#   and it seems to be working!
