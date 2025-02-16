@@ -1,6 +1,7 @@
 # read in a text file and analyse the word composition... get unique word count for txt files
 
 from ankiaccess import invoke
+# import json
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -57,6 +58,11 @@ if __name__ == "__main__":
         deckNameDict = { 'query' : 'deck:'+compare }
         # perform a findCards operation using the given deck name
         foundCardsIds = invoke('findCards', query='deck:'+compare)
-        print(foundCardsIds[0])
+        # get the response object, represented as a list
         cardsInfo = invoke('cardsInfo', cards=[foundCardsIds[0]])
-        
+        print(cardsInfo)
+        # TODO: need to figure out whether I can do a simple lookup in this list
+        #       rather than having to do regex pattern matching!
+
+
+
