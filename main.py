@@ -1,6 +1,6 @@
 # read in a text file and analyse the word composition... get unique word count for txt files
 
-from ankiaccess import request, invoke
+from ankiaccess import invoke
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -49,10 +49,19 @@ if __name__ == "__main__":
         result = invoke('deckNames')
         print(*result, sep='\n')
     # check if we're comparing the supplied file with the Anki deck
+    # FIXME: currently this is only for one card, need to iterate over each card in the deck
+    #        and splice out the front+back entries and add to a dict. Then do the cross check
     if(compare):
         print("\nFetching deck " + compare + "...")
         # form the dictionary required containing the deck name
         deckNameDict = { 'query' : 'deck:'+compare }
         # perform a findCards operation using the given deck name
-        foundCardsIds = invoke('findCards', deckNameDict)
-        print(str(foundCardsIds))
+        foundCardsIds = invoke('findCards', query='deck:current')
+        print(foundCardsIds[0])
+        cardsInfo = invoke('cardsInfo', cards=[foundCardsIds[0]])
+        print(str(cardsInfo))
+
+
+# TODO:
+# - figure out how to pass the deck name through the command line rather than relying on 
+#   deck:current
